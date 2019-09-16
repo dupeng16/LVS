@@ -1,0 +1,19 @@
+#!/bin/bash
+while :
+do
+uptime |awk '{print "cpu 平均负载是"$10,$11,$12}'
+ifconfig eth0 | awk '/RX p/{print "网卡接受的数据量 是" $5"字节"}'
+ifconfig eth0 | awk '/TX p/{print "网卡发送的数据量 是" $5"字节"}'
+free -m |awk '/Mem/{print "剩余内存容量是"$4"M"}'
+df -h | awk '/vda1/{print "根分区剩余容量是"$4}'
+user=`cat /etc/passwd | wc -l`
+echo "服务器拥有账户数量是$user个"
+u=`who | wc -l`
+echo "当前服务器登录用户的数量是$u个"
+p=`ps aux | wc -l`
+echo "当前主机运行的进程数量是$p个"
+ins=`rpm -qa | wc -l`
+echo "当前主机安装软件包数量是$ins个"
+sleep 3
+clear
+done
